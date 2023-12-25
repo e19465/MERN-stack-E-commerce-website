@@ -23,6 +23,7 @@ const Desc = styled.div`
 const H1 = styled.h1`
   font-size: 50px;
   font-family: var(--URBANIST-FF);
+  letter-spacing: 2px;
 `;
 
 const P = styled.p`
