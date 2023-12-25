@@ -11,6 +11,8 @@ const Container = styled.div`
   position: relative;
   background-color: coral;
   overflow: hidden;
+  border-bottom: 1px solid #fff;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
 `;
 
 /* Arrow component for slider */

@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { categories } from "../../data";
-import CategoryItem from "../CategoryItem/CategoryItem";
+import { products } from "../../data";
+import SingleProduct from "../SingleProduct/SingleProduct";
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 50px;
-  padding: 50px;
+  margin-top: 40px;
+  display: flex;
+  flex-flow: row wrap;
 `;
 
 const Desc = styled.div`
@@ -30,20 +29,20 @@ const P = styled.p`
   font-size: 18px;
 `;
 
-const Categories = () => {
+const Products = () => {
   return (
     <>
       <Desc>
-        <H1>Style Haven</H1>
-        <P>"Discover Fashion Bliss with Our Trendy Cloth Collection!"</P>
+        <H1>Featured Products</H1>
+        <P>"Discover your style, one outfit at a time."</P>
       </Desc>
       <Container>
-        {categories.map((category) => (
-          <CategoryItem key={category.id} category={category} />
+        {products.map((product) => (
+          <SingleProduct product={product} key={product.id} />
         ))}
       </Container>
     </>
   );
 };
 
-export default Categories;
+export default Products;

@@ -88,7 +88,7 @@ const Navbar = () => {
           <MenuItem>register</MenuItem>
           <MenuItem>login</MenuItem>
           <MenuItem>
-            <FaShoppingCart style={{ color: "#222", fontSize: "1rem" }} />
+            <FaShoppingCart style={{ color: "dodgerblue", fontSize: "1rem" }} />
           </MenuItem>
         </Right>
       </Wrapper>
