@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { xSmall } from "../../Responsiveness";
 
 const Contaier = styled.div`
   border: 1px solid #bcefe9;
@@ -8,6 +9,11 @@ const Contaier = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  ${xSmall({
+    width: "300px",
+    marginBottom: "10px",
+  })}
 `;
 
 const IMG_CONTAINER = styled.div``;

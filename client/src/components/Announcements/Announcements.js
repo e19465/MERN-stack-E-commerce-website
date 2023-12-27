@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { xSmall } from "../../Responsiveness";
 
 const Container = styled.div`
   height: 30px;
@@ -10,6 +11,10 @@ const Container = styled.div`
   justify-content: center;
   font-size: 14px;
   font-weight: 500;
+
+  ${xSmall({
+    fontSize: "12px",
+  })}
 `;
 
 const Announcements = () => {

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import BANNER from "../../assests/b14.png";
 import { IoMdSend } from "react-icons/io";
+import { xSmall } from "../../Responsiveness";
 
 const Container = styled.div`
   width: 100%;
-  height: 200px;
+  min-height: 200px;
   background-image: url(${BANNER});
   background-color: #041e42;
   margin-bottom: 20px;
@@ -15,6 +16,13 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 50px 100px;
   font-family: var(--VARELA_ROUND-FF);
+
+  ${xSmall({
+    padding: "20px",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+  })}
 `;
 
 const Text = styled.div`
@@ -26,18 +34,30 @@ const Text = styled.div`
 const P1 = styled.p`
   color: #fff;
   font-size: 25px;
+
+  ${xSmall({
+    fontSize: "18px",
+  })}
 `;
 
 const P2 = styled.p`
   color: #fff;
   font-size: 15px;
   letter-spacing: 1px;
+
+  ${xSmall({
+    fontSize: "10px",
+  })}
 `;
 
 const Span = styled.span`
   font-size: 17px;
   letter-spacing: 1px;
   color: rgb(243, 181, 25);
+
+  ${xSmall({
+    fontSize: "12px",
+  })}
 `;
 
 const Form = styled.form`
@@ -56,6 +76,11 @@ const Input = styled.input`
   padding: 10px 20px 10px 10px;
   border: 1px solid #fff;
   font-family: var(--VARELA_ROUND-FF);
+
+  ${xSmall({
+    width: "200px",
+    height: "30px",
+  })}
 `;
 
 const Button = styled.button`
@@ -74,6 +99,11 @@ const Button = styled.button`
   &:hover {
     filter: brightness(1.3);
   }
+
+  ${xSmall({
+    width: "40px",
+    height: "30px",
+  })}
 `;
 
 const Newsletter = () => {
@@ -92,7 +122,6 @@ const Newsletter = () => {
           <IoMdSend
             style={{
               color: "#fff",
-              fontSize: "1.3rem",
             }}
           />
         </Button>

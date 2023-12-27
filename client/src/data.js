@@ -1,10 +1,15 @@
+/* Data */
 import GIRL1 from "./assests/girl_shp_1.jpg";
 import GIRL2 from "./assests/girl_shp_2.webp";
 import GIRL3 from "./assests/girl_shp_3.png";
 import GIRL4 from "./assests/girl_shp_4.png";
+
+/* Categories */
 import CATE1 from "./assests/cate1.jpg";
 import CATE2 from "./assests/cate2.webp";
 import CATE3 from "./assests/cate3.webp";
+
+/* Products */
 import TS1 from "./assests/ts1.jpg";
 import TS2 from "./assests/ts2.webp";
 import TS3 from "./assests/ts3.jpg";
@@ -17,12 +22,20 @@ import TS9 from "./assests/ts9.png";
 import TS10 from "./assests/ts10.jpg";
 import TS11 from "./assests/ts11.jpg";
 import TS12 from "./assests/ts12.jpg";
+
+/* Featured */
 import F1 from "./assests/f1.png";
 import F2 from "./assests/f2.png";
 import F3 from "./assests/f3.png";
 import F4 from "./assests/f4.png";
 import F5 from "./assests/f5.png";
 import F6 from "./assests/f6.png";
+
+/* SingleProductImages */
+import DJSM1 from "./assests/DJSM1.jpg";
+import DJSM2 from "./assests/DJSM2.webp";
+import DJSM3 from "./assests/DJSM3.webp";
+import DJSM4 from "./assests/DJSM4.jpg";
 
 export const data = [
   {
@@ -199,5 +212,24 @@ export const listItems = [
   {
     id: 10,
     name: "terms",
+  },
+];
+
+export const singleProductImages = [
+  {
+    id: 1,
+    img: DJSM1,
+  },
+  {
+    id: 2,
+    img: DJSM2,
+  },
+  {
+    id: 3,
+    img: DJSM3,
+  },
+  {
+    id: 4,
+    img: DJSM4,
   },
 ];

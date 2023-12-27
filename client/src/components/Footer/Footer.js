@@ -12,6 +12,7 @@ import { BsTelephoneFill } from "react-icons/bs";
 import { MdLocationPin, MdEmail } from "react-icons/md";
 import { listItems } from "../../data";
 import LineItem from "./LineItem";
+import { xSmall } from "../../Responsiveness";
 
 /* MAin footer container */
 const Container = styled.div`
@@ -19,6 +20,10 @@ const Container = styled.div`
   height: 500px;
   display: flex;
   flex-direction: row;
+
+  ${xSmall({
+    flexDirection: "column",
+  })}
 `;
 
 /* left side */

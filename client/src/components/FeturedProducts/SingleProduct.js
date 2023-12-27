@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { xSmall } from "../../Responsiveness";
 
 const Info = styled.div`
   opacity: 0;
@@ -38,6 +39,10 @@ const Container = styled.div`
   &:hover {
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.3);
   }
+
+  ${xSmall({
+    margin: "0 10px 10px",
+  })}
 `;
 const Image = styled.img`
   width: 100%;

@@ -16,6 +16,11 @@ const Container = styled.div`
   background: radial-gradient(#c1ffc1, #006400);
   color: #000080;
   cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.5s;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 /* icon animation */

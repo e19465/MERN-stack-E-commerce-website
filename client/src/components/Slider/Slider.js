@@ -3,6 +3,8 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useState } from "react";
 import { data } from "../../data";
 import buttonPng from "../../assests/button.png";
+import { xSmall } from "../../Responsiveness";
+import GIRL from "../../assests/girl_shp_3.png";
 /* Main Container */
 const Container = styled.div`
   width: 100%;
@@ -13,8 +15,37 @@ const Container = styled.div`
   overflow: hidden;
   border-bottom: 1px solid #fff;
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
+
+  ${xSmall({
+    background: `radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(${GIRL}) no-repeat center center/ cover`,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "80vh",
+    boxShadow: "none",
+  })}
 `;
 
+const XsBtn = styled.button`
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  font-size: 17px;
+  color: #000;
+  font-weight: 900;
+  border: 2px solid #fff;
+  cursor: pointer;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  ${xSmall({
+    display: "flex",
+    // width: "100%",
+    // backgroundColor: "black",
+  })}
+`;
 /* Arrow component for slider */
 const Arrow = styled.div`
   width: 50px;
@@ -39,6 +70,10 @@ const Arrow = styled.div`
   &:hover {
     opacity: 1;
   }
+
+  ${xSmall({
+    display: "none",
+  })}
 `;
 
 /* Wrapper for slide */
@@ -48,6 +83,9 @@ const Wrapper = styled.div`
   display: flex;
   transform: translateX(${(props) => props.slideIndex * -100}vw);
   transition: all 2s;
+  ${xSmall({
+    display: "none",
+  })}
 `;
 
 /* Sliding component */
@@ -57,6 +95,10 @@ const Slide = styled.div`
   height: 100vh;
   min-width: 100vw;
   transition: all 1s;
+
+  ${xSmall({
+    display: "none",
+  })}
 `;
 
 /* Sliding image container */
@@ -69,6 +111,10 @@ const ImageContainer = styled.div`
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
+
+  ${xSmall({
+    display: "none",
+  })}
 `;
 
 /* Sliding image */
@@ -130,6 +176,7 @@ const Slider = () => {
   return (
     <>
       <Container>
+        <XsBtn>shop now</XsBtn>
         <Arrow direction="left" onClick={() => handleLeft()}>
           <FaArrowLeft style={{ color: "#777" }} />
         </Arrow>

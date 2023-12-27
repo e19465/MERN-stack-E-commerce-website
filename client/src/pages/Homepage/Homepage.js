@@ -10,8 +10,8 @@ import Featured from "../../components/Featured/Featured";
 const Homepage = () => {
   return (
     <div className="homepage">
-      <Announcements />
       <Navbar />
+      <Announcements />
       <Slider />
       <Featured />
       <Categories />
