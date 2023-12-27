@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { products } from "../../data";
-import SingleProduct from "../SingleProduct/SingleProduct";
+import SingleProduct from "./SingleProduct";
 
 const Container = styled.div`
-  margin-top: 40px;
+  margin-top: 10px;
   display: flex;
   flex-flow: row wrap;
 `;
@@ -11,13 +11,13 @@ const Container = styled.div`
 const Desc = styled.div`
   width: 100%;
   height: 200px;
-  background-color: lavender;
+  /* background-color: lavender; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 20px;
-  margin: 80px 0px 40px;
+  /* margin: 80px 0px 40px; */
 `;
 
 const H1 = styled.h1`

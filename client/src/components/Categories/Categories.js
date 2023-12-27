@@ -1,24 +1,23 @@
 import styled from "styled-components";
 import { categories } from "../../data";
-import CategoryItem from "../CategoryItem/CategoryItem";
+import CategoryItem from "./CategoryItem";
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 50px;
-  padding: 50px;
+  padding: 10px 50px;
 `;
 
 const Desc = styled.div`
   width: 100%;
-  height: 200px;
-  background-color: lavender;
+  height: 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
-  margin: 80px 0px 40px;
+  justify-content: flex-end;
+  padding: 10px;
+  margin: 10px 0px 20px;
 `;
 
 const H1 = styled.h1`

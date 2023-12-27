@@ -17,6 +17,12 @@ import TS9 from "./assests/ts9.png";
 import TS10 from "./assests/ts10.jpg";
 import TS11 from "./assests/ts11.jpg";
 import TS12 from "./assests/ts12.jpg";
+import F1 from "./assests/f1.png";
+import F2 from "./assests/f2.png";
+import F3 from "./assests/f3.png";
+import F4 from "./assests/f4.png";
+import F5 from "./assests/f5.png";
+import F6 from "./assests/f6.png";
 
 export const data = [
   {
@@ -111,5 +117,87 @@ export const products = [
   {
     id: 12,
     img: TS12,
+  },
+];
+
+export const featured = [
+  {
+    id: 1,
+    img: F1,
+    color: "#ADD8E6",
+    desc: "Free Shipping",
+  },
+  {
+    id: 2,
+    img: F2,
+    color: " #FFECB3",
+    desc: "Online Order",
+  },
+  {
+    id: 3,
+    img: F3,
+    color: "#C1FFC1",
+    desc: "Save Money",
+  },
+  {
+    id: 4,
+    img: F4,
+    color: "#E6CCFF",
+    desc: "Promotions",
+  },
+  {
+    id: 5,
+    img: F5,
+    color: "#FFECB3",
+    desc: "Happy Sell",
+  },
+  {
+    id: 6,
+    img: F6,
+    color: "#FFD1DC",
+    desc: "24/7 support",
+  },
+];
+
+export const listItems = [
+  {
+    id: 1,
+    name: "home",
+  },
+  {
+    id: 2,
+    name: "men's fashion",
+  },
+  {
+    id: 3,
+    name: "accessories",
+  },
+  {
+    id: 4,
+    name: "order tracking",
+  },
+  {
+    id: 5,
+    name: "wishlist",
+  },
+  {
+    id: 6,
+    name: "cart",
+  },
+  {
+    id: 7,
+    name: "women's fashion",
+  },
+  {
+    id: 8,
+    name: "my account",
+  },
+  {
+    id: 9,
+    name: "help",
+  },
+  {
+    id: 10,
+    name: "terms",
   },
 ];
