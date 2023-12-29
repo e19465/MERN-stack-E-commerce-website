@@ -81,7 +81,7 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  transform: translateX(${(props) => props.slideIndex * -100}vw);
+  transform: translateX(${(props) => props.slide * -100}vw);
   transition: all 2s;
   ${xSmall({
     display: "none",
@@ -180,7 +180,7 @@ const Slider = () => {
         <Arrow direction="left" onClick={() => handleLeft()}>
           <FaArrowLeft style={{ color: "#777" }} />
         </Arrow>
-        <Wrapper slideIndex={slideIndex}>
+        <Wrapper slide={slideIndex}>
           {data.map((item) => (
             <Slide key={item.id}>
               <ImageContainer>

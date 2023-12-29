@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import SHOE from "../../assests/shoe.jpg";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useState } from "react";
+import { xSmall } from "../../Responsiveness";
 
 const Container = styled.div``;
 
@@ -24,9 +25,22 @@ const CartHeader = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  ${xSmall({
+    padding: "20px",
+    flexDirection: "column",
+  })}
 `;
 
-const CartHeaderLinksContainer = styled.div``;
+const CartHeaderLinksContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${xSmall({
+    flexDirection: "column",
+    padding: "10px",
+  })}
+`;
 
 const CartButton = styled.button`
   padding: 10px;
@@ -39,19 +53,32 @@ const CartButton = styled.button`
   color: ${(props) => (props.filled === "filled" ? "#fff" : "#000")};
   border: 1px ${(props) => (props.filled === "filled" ? "solid" : "groove")}
     #000;
+
+  ${xSmall({
+    width: "100%",
+  })}
 `;
 
 const CartHeaderLinks = styled(Link)`
   margin-right: 20px;
   color: #333;
+
+  ${xSmall({
+    marginBottom: "10px",
+  })}
 `;
 
 const OrderDetailsAndSummaryContainer = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  flex-direction: row;
   margin-top: 20px;
+
+  ${xSmall({
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  })}
 `;
 
 /* Order details => left side */
@@ -68,6 +95,10 @@ const OrderDetailsContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  ${xSmall({
+    margin: 0,
+  })}
 `;
 
 const OneOrder = styled.div`
@@ -79,6 +110,14 @@ const OneOrder = styled.div`
   border-bottom: 0.5px solid lightgray;
   margin-bottom: 20px;
   padding-bottom: 20px;
+
+  ${xSmall({
+    width: "95%",
+    height: "auto",
+    flexDirection: "column",
+    paddingLeft: "0px",
+    margin: "0 0 20px 0",
+  })}
 `;
 
 const OrderImageContainer = styled.div`
@@ -96,6 +135,11 @@ const OrderDetails = styled.div`
   padding-left: 50px;
   padding-top: 20px;
   letter-spacing: 1px;
+
+  ${xSmall({
+    width: "100%",
+    paddingLeft: "0px",
+  })}
 `;
 
 /* Order quantity container */
@@ -165,6 +209,12 @@ const OrderSummaryConatiner = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0px 20px 20px 20px;
+
+  ${xSmall({
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  })}
 `;
 
 const OrderSummary = styled.div`

@@ -4,6 +4,7 @@ import Announcements from "../../components/Announcements/Announcements";
 import Products from "../../components/FeturedProducts/Products";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
+import { xSmall } from "../../Responsiveness";
 
 const Container = styled.div`
   width: 100%;
@@ -19,15 +20,26 @@ const FilterProducts = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  ${xSmall({
+    padding: "10px",
+  })}
 `;
 const Filter = styled.div`
   margin: 20px 200px;
+  ${xSmall({
+    margin: "0px",
+  })}
 `;
 
-const FilterText = styled.span`
+const FilterText = styled.div`
   font-size: 20px;
   font-weight: 500;
   font-family: var(--VARELA_ROUND-FF);
+
+  ${xSmall({
+    marginBottom: "10px",
+  })}
 `;
 
 const Select = styled.select`

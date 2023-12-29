@@ -8,6 +8,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 /* images */
 import PATTERN from "../../assests/pattern.png";
 import { useState } from "react";
+import { xSmall } from "../../Responsiveness";
 
 const Container = styled.div`
   width: 100%;
@@ -17,12 +18,18 @@ const Container = styled.div`
 /* Left Side */
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   margin: 50px 10px 10px;
+
+  ${xSmall({
+    flexDirection: "column",
+    padding: "0px 5px",
+    margin: "10px 0px",
+  })}
 `;
 
 /* left side main container*/
