@@ -53,7 +53,7 @@ router.delete("/deleteproduct/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 // GET PRODUCT
-router.get("/getproduct/:id", verifyTokenAndAdmin, async (req, res) => {
+router.get("/getproduct/:id", async (req, res) => {
   const id = req.params.id;
   try {
     if (!id) return res.status(400).json("Product ID must be provided!");

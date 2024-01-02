@@ -4,10 +4,10 @@ import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import SHOE from "../../assests/shoe.jpg";
-import { FaPlus, FaMinus } from "react-icons/fa";
-import { useState } from "react";
+import { MdDeleteOutline } from "react-icons/md";
 import { xSmall } from "../../Responsiveness";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProduct } from "../../Redux/features/cart/cartSlice";
 
 const Container = styled.div``;
 
@@ -164,15 +164,19 @@ const Icon = styled.div`
   width: 40px;
   height: 40px;
   margin-right: 10px;
-  border: ${(props) =>
-    props.border === "border" ? "1px solid #088178" : "none"};
-  cursor: ${(props) => (props.border === "border" ? "auto" : "pointer")};
-  font-size: ${(props) => (props.border === "border" ? "20px" : "18px")};
-  font-weight: ${(props) => (props.border === "border" ? 700 : 500)};
+  border: 1px solid #088178;
+  cursor: ${(props) => (props.delete === "delete" ? "pointer" : "auto")};
+  font-size: 20px;
+  font-weight: 700;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 1s;
+  &:hover {
+    background-color: ${(props) => props.delete === "delete" && "teal"};
+    color: ${(props) => props.delete === "delete" && "#fff"};
+  }
 `;
 
 const Price = styled.div`
@@ -194,7 +198,7 @@ const Color = styled.div`
   height: 25px;
   padding: 10px;
   border-radius: 50%;
-  background-color: midnightblue;
+  background-color: ${(props) => (props.color ? props.color : "transparent")};
 `;
 const Bold = styled.span`
   font-weight: bold;
@@ -265,18 +269,8 @@ const OrderSummaryBtn = styled.button`
 `;
 
 const CartPage = () => {
-  const [orderQuantity, setOrderQuantity] = useState(1);
-
-  const handleIncrease = () => {
-    setOrderQuantity(orderQuantity + 1);
-  };
-
-  const handleDecrease = () => {
-    if (orderQuantity > 0) {
-      setOrderQuantity(orderQuantity - 1);
-    }
-  };
-
+  const { products, total } = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
   return (
     <Container>
       <Navbar />
@@ -293,50 +287,55 @@ const CartPage = () => {
         </CartHeader>
         <OrderDetailsAndSummaryContainer>
           <OrderDetailsContainer>
-            <OneOrder>
-              <OrderImageContainer>
-                <OrderImage src={SHOE} />
-              </OrderImageContainer>
-              <OrderDetails>
-                <ProductDetail>
-                  <Detail>
-                    <Bold>name:</Bold>Jessie Thunder Shoes
-                  </Detail>
-                </ProductDetail>
-                <ProductDetail>
-                  <Detail>
-                    <Bold>size:</Bold>145879932
-                  </Detail>
-                </ProductDetail>
-                <ProductDetail>
-                  <Detail>
-                    <Bold>size:</Bold>38
-                  </Detail>
-                </ProductDetail>
-                <ProductDetail>
-                  <Color />
-                </ProductDetail>
-              </OrderDetails>
-              <OrderQuantity>
-                <IconQuantity>
-                  <Icon>
-                    <FaMinus role="button" onClick={handleDecrease} />
-                  </Icon>
-                  <Icon border="border">{orderQuantity}</Icon>
-                  <Icon>
-                    <FaPlus role="button" onClick={handleIncrease} />
-                  </Icon>
-                </IconQuantity>
-                <Price>$ 30</Price>
-              </OrderQuantity>
-            </OneOrder>
+            {products.map((product, index) => (
+              <OneOrder key={index}>
+                <OrderImageContainer>
+                  <OrderImage src={product.img} />
+                </OrderImageContainer>
+                <OrderDetails>
+                  <ProductDetail>
+                    <Detail>
+                      <Bold>name:</Bold>
+                      {product.title}
+                    </Detail>
+                  </ProductDetail>
+                  <ProductDetail>
+                    <Detail>
+                      <Bold>id:</Bold>
+                      {product._id}
+                    </Detail>
+                  </ProductDetail>
+                  <ProductDetail>
+                    <Detail>
+                      <Bold>size:</Bold>
+                      {product.chosenSize}
+                    </Detail>
+                  </ProductDetail>
+                  <ProductDetail>
+                    <Color color={product.chosenColor} />
+                  </ProductDetail>
+                </OrderDetails>
+                <OrderQuantity>
+                  <IconQuantity>
+                    <Icon>{product.itemsQuantity}</Icon>
+                    <Icon delete="delete">
+                      <MdDeleteOutline
+                        role="button"
+                        onClick={() => dispatch(removeProduct(product))}
+                      />
+                    </Icon>
+                  </IconQuantity>
+                  <Price>$ {product.price * product.itemsQuantity}</Price>
+                </OrderQuantity>
+              </OneOrder>
+            ))}
           </OrderDetailsContainer>
           <OrderSummaryConatiner>
             <OrderSummary>
               <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
               <OrderSummaryLine>
                 <OrderSummaryItem>Subtotal</OrderSummaryItem>
-                <OrderSummaryItem>$ 80</OrderSummaryItem>
+                <OrderSummaryItem>$ {total}</OrderSummaryItem>
               </OrderSummaryLine>
               <OrderSummaryLine>
                 <OrderSummaryItem>Estimated Shipping</OrderSummaryItem>
@@ -348,7 +347,7 @@ const CartPage = () => {
               </OrderSummaryLine>
               <OrderSummaryLine big="big">
                 <OrderSummaryItem>Total</OrderSummaryItem>
-                <OrderSummaryItem>$ 80</OrderSummaryItem>
+                <OrderSummaryItem>$ {total}</OrderSummaryItem>
               </OrderSummaryLine>
               <OrderSummaryLine>
                 <OrderSummaryBtn>checkout now</OrderSummaryBtn>

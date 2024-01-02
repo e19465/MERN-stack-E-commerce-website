@@ -3,12 +3,20 @@ import Navbar from "../../components/Navbar/Navbar";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
 import Announcements from "../../components/Announcements/Announcements";
-import { singleProductImages } from "../../data";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { xSmall } from "../../Responsiveness";
+import { useLocation } from "react-router-dom";
+import { publicRequest } from "../../requestMethods";
+import {
+  addProduct,
+  increaseQuantity,
+} from "../../Redux/features/cart/cartSlice";
 /* images */
 import PATTERN from "../../assests/pattern.png";
-import { useState } from "react";
-import { xSmall } from "../../Responsiveness";
+import PT1 from "../../assests/PT1.png";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   width: 100%;
@@ -23,7 +31,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 50px 10px 10px;
+  margin: 10px;
 
   ${xSmall({
     flexDirection: "column",
@@ -95,6 +103,7 @@ const Title = styled.h1`
   width: 100%;
   text-align: left;
   letter-spacing: 1px;
+  text-transform: capitalize;
 `;
 
 const Description = styled.p`
@@ -117,9 +126,9 @@ const Price = styled.p`
 const ColorAndSizeCOntainer = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 20px;
 `;
 
 const ColorSize = styled.span`
@@ -129,8 +138,10 @@ const ColorSize = styled.span`
 
 const ColorContainer = styled.div`
   flex: 1;
-  height: 100%;
+  min-height: 100%;
+  max-width: 50%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
 `;
@@ -138,15 +149,15 @@ const ColorContainer = styled.div`
 const Color = styled.div`
   width: 15px;
   height: 15px;
-  border-radius: 50%;
-  margin-right: 5px;
+  border-radius: ${(props) => (props.choosed === props.color ? "50%" : "0%")};
   background-color: ${(props) => props.color};
   cursor: pointer;
-  margin-left: 5px;
+  margin: 5px;
 `;
 
 const SizeContainer = styled.div`
   flex: 2;
+  padding-left: 100px;
 `;
 
 const Select = styled.select`
@@ -193,7 +204,7 @@ const Icon = styled.div`
 
 const AddToCartButton = styled.button`
   margin-left: 50px;
-  border: none;
+  border: 1px solid teal;
   outline: none;
   padding: 10px 20px;
   background-color: teal;
@@ -205,26 +216,69 @@ const AddToCartButton = styled.button`
   &:hover {
     filter: brightness(1.3);
   }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: lightgray;
+    color: #333;
+    border: 1px solid #000;
+  }
 `;
 
 const SingleProductPage = () => {
+  const dispatch = useDispatch();
   const [itemsQuantity, setItemsQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(
-    singleProductImages[0].img
-  );
+  const [product, setProduct] = useState({});
+  const [selectedImage, setSelectedImage] = useState(PT1);
+  const [chosenColor, setChosenColor] = useState("");
+  const [chosenSize, setChosenSize] = useState("");
+
+  const location = useLocation();
+  const productId = location.pathname.split("/")[2];
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await publicRequest.get(
+          `products/getproduct/${productId}`
+        );
+        setProduct(response.data);
+        setSelectedImage(response.data.img);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProduct();
+  }, [productId]);
+
+  /* Functions */
 
   const handleImageExchange = (e) => {
     setSelectedImage(e.target.src);
   };
 
-  const handleDecrease = () => {
-    if (itemsQuantity > 0) {
-      setItemsQuantity(itemsQuantity - 1);
+  const handleQuantity = (type) => {
+    if (type === "inc") {
+      setItemsQuantity(itemsQuantity + 1);
+    } else {
+      if (itemsQuantity > 1) {
+        setItemsQuantity(itemsQuantity - 1);
+      }
     }
   };
 
-  const handleIncrease = () => {
-    setItemsQuantity(itemsQuantity + 1);
+  const handleAddToCart = () => {
+    const uniqueId = uuidv4();
+    dispatch(increaseQuantity({ itemsQuantity, price: product.price }));
+    dispatch(
+      addProduct({
+        ...product,
+        chosenColor,
+        chosenSize,
+        itemsQuantity,
+        uniqueId,
+      })
+    );
+    setItemsQuantity(1);
   };
 
   return (
@@ -238,57 +292,65 @@ const SingleProductPage = () => {
             <Image src={selectedImage} />
           </MainImageContainer>
           <OtherImagesAllContainer>
-            {singleProductImages.map((image) => (
-              <OtherImage key={image.id}>
-                <Image src={image.img} onClick={handleImageExchange} />
+            {product.otherImg?.map((url, index) => (
+              <OtherImage key={index}>
+                <Image src={url} onClick={handleImageExchange} />
               </OtherImage>
             ))}
           </OtherImagesAllContainer>
         </ImagesContainer>
 
         <DescContainer>
-          <Title>Denim Jumpsuit</Title>
-          <Description>
-            Discover the epitome of fashion and comfort with Triumph's Denim
-            Jumpsuit. Meticulously crafted from high-quality denim, this
-            jumpsuit seamlessly combines style and ease. Its versatile design
-            ensures a trendy look for any occasion. Elevate your wardrobe with
-            this chic and timeless piece, reflecting Triumph's commitment to
-            fashion-forward, quality attire. Dress up or down, Triumph's Denim
-            Jumpsuit is a must-have for contemporary, confident style.
-          </Description>
-          <Price>$ 20</Price>
+          <Title>{product.title}</Title>
+          <Description>{product.desc}</Description>
+          <Price>$ {product.price}</Price>
           <ColorAndSizeCOntainer>
             <ColorContainer>
               <ColorSize>Color: </ColorSize>
-              <Color color="blue" />
-              <Color color="red" />
-              <Color color="green" />
+              {product.color?.map((color) => (
+                <Color
+                  choosed={chosenColor}
+                  color={color}
+                  key={color}
+                  onClick={() =>
+                    setChosenColor((prevColor) =>
+                      prevColor === color ? null : color
+                    )
+                  }
+                />
+              ))}
             </ColorContainer>
             <SizeContainer>
               <ColorSize>Size: </ColorSize>
-              <Select>
-                <Option selected disabled>
-                  select
-                </Option>
-                <Option>xs</Option>
-                <Option>s</Option>
-                <Option>m</Option>
-                <Option>l</Option>
-                <Option>xl</Option>
-                <Option>xxl</Option>
+              <Select
+                defaultValue="select"
+                onChange={(e) =>
+                  setChosenSize((prevSize) =>
+                    prevSize === e.target.value ? null : e.target.value
+                  )
+                }
+              >
+                <Option disabled>select</Option>
+                {product.size?.map((size) => (
+                  <Option key={size}>{size}</Option>
+                ))}
               </Select>
             </SizeContainer>
           </ColorAndSizeCOntainer>
           <QuantityContainer>
             <Icon>
-              <FaMinus role="button" onClick={handleDecrease} />
+              <FaMinus role="button" onClick={() => handleQuantity("dec")} />
             </Icon>
             <Quantity>{itemsQuantity}</Quantity>
             <Icon>
-              <FaPlus role="button" onClick={handleIncrease} />
+              <FaPlus role="button" onClick={() => handleQuantity("inc")} />
             </Icon>
-            <AddToCartButton>Add to cart</AddToCartButton>
+            <AddToCartButton
+              onClick={handleAddToCart}
+              disabled={chosenColor && chosenSize ? false : true}
+            >
+              Add to cart
+            </AddToCartButton>
           </QuantityContainer>
         </DescContainer>
       </Wrapper>

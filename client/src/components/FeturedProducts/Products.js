@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { products } from "../../data";
 import SingleProduct from "./SingleProduct";
 import { xSmall } from "../../Responsiveness";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   margin-top: 10px;
@@ -51,7 +52,53 @@ const P = styled.p`
   })}
 `;
 
-const Products = () => {
+const Products = ({ category, filters, sort }) => {
+  const [databaseProducts, setDatabaseProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const response = await axios.get(
+          category
+            ? `http://localhost:5000/api/products/allproducts?category=${category}`
+            : "http://localhost:5000/api/products/allproducts"
+        );
+        setDatabaseProducts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getProducts();
+  }, [category]);
+
+  useEffect(() => {
+    category &&
+      setFilteredProducts(
+        databaseProducts.filter((product) =>
+          Object.entries(filters).every(([key, value]) =>
+            product[key].includes(value)
+          )
+        )
+      );
+  }, [category, databaseProducts, filters]);
+
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === "asc") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.price - b.price)
+      );
+    } else {
+      setDatabaseProducts((prev) =>
+        [...prev].sort((a, b) => b.price - a.price)
+      );
+    }
+  }, [sort]);
+
   return (
     <>
       <Desc>
@@ -59,9 +106,15 @@ const Products = () => {
         <P>"Discover your style, one outfit at a time."</P>
       </Desc>
       <Container>
-        {products.map((product) => (
-          <SingleProduct product={product} key={product.id} />
-        ))}
+        {category
+          ? filteredProducts.map((product) => (
+              <SingleProduct product={product} key={product._id} />
+            ))
+          : databaseProducts
+              .slice(0, 10)
+              .map((product) => (
+                <SingleProduct product={product} key={product._id} />
+              ))}
       </Container>
     </>
   );

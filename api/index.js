@@ -4,12 +4,16 @@ const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 const PORT = 5000 || process.env.PORT;
+const cors = require("cors");
 
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URL)
   .then(console.log("Connected to MongoDB"))
   .catch((err) => console.log(err));
+
+// cors
+app.use(cors());
 
 // json middleware
 app.use(express.json());

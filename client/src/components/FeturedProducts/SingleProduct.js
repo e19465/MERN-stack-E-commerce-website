@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { xSmall } from "../../Responsiveness";
+import { Link } from "react-router-dom";
 
 const Info = styled.div`
   opacity: 0;
@@ -83,13 +84,15 @@ const Icon = styled.div`
 const SingleProduct = ({ product }) => {
   return (
     <Container>
-      <Image src={product.img} />
+      <Image src={`${product.img}`} />
       <Info>
         <Icon>
           <FaShoppingCart />
         </Icon>
         <Icon>
-          <FaSearch />
+          <Link to={`/singleproduct/${product._id}`}>
+            <FaSearch />
+          </Link>
         </Icon>
         <Icon>
           <FaHeart />

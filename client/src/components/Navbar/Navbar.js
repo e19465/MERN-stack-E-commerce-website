@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { xSmall } from "../../Responsiveness";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 const Container = styled.div`
   height: 60px;
-
   /* extra-small devices width <= 576px*/
   ${xSmall({
     height: "auto",
@@ -119,7 +121,6 @@ const MenuItem = styled.div`
   margin-left: 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
-
   ${xSmall({
     margin: 0,
     fontSize: "10px",
@@ -127,7 +128,35 @@ const MenuItem = styled.div`
   })}
 `;
 
+const CartContainer = styled.div`
+  font-size: 25px;
+  cursor: pointer;
+  margin-left: 20px;
+  text-transform: uppercase;
+  position: relative;
+`;
+
+const CartQuantity = styled.div`
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid midnightblue;
+  background-color: lightblue;
+  color: midnightblue;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-weight: bolder;
+  z-index: -1;
+`;
+
 const Navbar = () => {
+  const { quantity } = useSelector((store) => store.cart);
+
   return (
     <Container>
       <Wrapper>
@@ -144,9 +173,14 @@ const Navbar = () => {
         <Right>
           <MenuItem>register</MenuItem>
           <MenuItem>login</MenuItem>
-          <MenuItem>
-            <FaShoppingCart style={{ color: "dodgerblue", fontSize: "1rem" }} />
-          </MenuItem>
+          <Link to="/cart">
+            <CartContainer>
+              <CartQuantity>{quantity}</CartQuantity>
+              <FaShoppingCart
+                style={{ color: "dodgerblue", fontSize: "1.3rem", zIndex: 5 }}
+              />
+            </CartContainer>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

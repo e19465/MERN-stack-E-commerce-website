@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import LOGBACK from "../../assests/log.png";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
+import axios from "axios";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "../../Redux/features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Contaier = styled.div`
   width: 100%;
@@ -32,7 +40,7 @@ const Right = styled.div`
 const Wrapper = styled.div`
   border: 1px solid midnightblue;
   width: 60%;
-  height: 60%;
+  height: 70%;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -105,6 +113,11 @@ const Button = styled.button`
     background-color: teal;
     color: #fff;
   }
+  &:disabled {
+    background-color: #000;
+    color: #fff;
+    cursor: not-allowed;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -121,25 +134,68 @@ const Reg = styled.p`
   font-weight: 700;
 `;
 
+const InfoP = styled.div`
+  font-size: 17px;
+  color: darkred;
+  font-weight: bolder;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 7px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+`;
+
 const Login = () => {
+  const { isFetching, isError } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const usernameRef = useRef();
+  const passwordRef = useRef();
+  const LOGIN_URL = "http://localhost:5000/api/auth/login";
+  const handleLogin = async (e) => {
+    dispatch(loginStart());
+    e.preventDefault();
+    const username = usernameRef.current.value;
+    const password = passwordRef.current.value;
+
+    try {
+      const response = await axios.post(LOGIN_URL, {
+        username: username,
+        password: password,
+      });
+      dispatch(loginSuccess(response.data));
+      usernameRef.current.value = "";
+      passwordRef.current.value = "";
+    } catch (err) {
+      dispatch(loginFailure());
+      console.log(err);
+    }
+  };
+
   return (
     <Contaier>
       <Left />
       <Right>
         <Wrapper>
           <Title>Sign In</Title>
-          <Form>
+          <Form onSubmit={handleLogin}>
             <InputWrapper>
-              <Input type="text" placeholder="user name" required />
+              <Input
+                type="text"
+                placeholder="user name"
+                ref={usernameRef}
+                required
+              />
               <Input
                 type="password"
                 placeholder="password"
                 required
                 autoComplete="off"
                 autoCorrect="off"
+                ref={passwordRef}
               />
             </InputWrapper>
-            <Button type="submit">login</Button>
+            <Button type="submit" disabled={isFetching}>
+              login
+            </Button>
           </Form>
           <Reg>
             Do not have an account? <StyledLink>Register Here.</StyledLink>
@@ -147,6 +203,8 @@ const Login = () => {
           <Reg>
             Forgot Password? <StyledLink>Reset Here.</StyledLink>
           </Reg>
+          {isFetching && <InfoP>Loading...</InfoP>}
+          {isError && !isFetching && <InfoP>Error! try again.</InfoP>}
         </Wrapper>
       </Right>
     </Contaier>

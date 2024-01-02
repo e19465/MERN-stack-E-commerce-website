@@ -5,17 +5,25 @@ import ProductList from "./pages/ProductList/ProductList";
 import Homepage from "./pages/Homepage/Homepage";
 import SingleProductPage from "./pages/SingleProductPage/SingleProductPage";
 import CartPage from "./pages/CartPage/CartPage";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { currentUser } = useSelector((store) => store.user);
   return (
     <div className="App">
       <Routes>
         <Route exact path="/" element={<Homepage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/productlist" element={<ProductList />} />
-        <Route path="/singleproduct" element={<SingleProductPage />} />
+        <Route
+          path="/login"
+          element={currentUser ? <Navigate to="/" /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={currentUser ? <Navigate to="/" /> : <Register />}
+        />
+        <Route path="/productlist/:category" element={<ProductList />} />
+        <Route path="/singleproduct/:id" element={<SingleProductPage />} />
         <Route path="/cart" element={<CartPage />} />
       </Routes>
       <BackToTop />
